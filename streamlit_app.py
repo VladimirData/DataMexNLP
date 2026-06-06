@@ -160,10 +160,8 @@ def vista_comun():
         st.subheader("Top 10 tipos de delito")
         st.markdown("Delitos de mayor volumen en el periodo.")
         top = dff.groupby("Tipo de delito")["Total"].sum().sort_values(ascending=False).head(10).reset_index()
-        fig = px.bar(top, x="Total", y="Tipo de delito", orientation="h",
-                     color_discrete_sequence=[C["blue"]])
-        fig.update_layout(**LAYOUT, showlegend=False, height=400,
-                          yaxis=dict(categoryorder="total ascending", gridcolor="#E2E0D8"))
+        fig.update_layout(**LAYOUT, showlegend=False, height=400)
+        fig.update_yaxes(categoryorder="total ascending")
         st.plotly_chart(fig, use_container_width=True)
         fuente(f"Agregación por Tipo de delito. {SRC}")
 
@@ -187,10 +185,8 @@ def vista_comun():
         st.subheader("Top 10 entidades")
         st.markdown("Entidades con mayor incidencia en el periodo.")
         te = dff.groupby("Entidad")["Total"].sum().sort_values(ascending=False).head(10).reset_index()
-        fig = px.bar(te, x="Total", y="Entidad", orientation="h",
-                     color_discrete_sequence=[C["purple"]])
-        fig.update_layout(**LAYOUT, showlegend=False, height=400,
-                          yaxis=dict(categoryorder="total ascending", gridcolor="#E2E0D8"))
+        fig.update_layout(**LAYOUT, showlegend=False, height=400)
+        fig.update_yaxes(categoryorder="total ascending")
         st.plotly_chart(fig, use_container_width=True)
         fuente(f"Agregación por Entidad. {SRC}")
 
@@ -290,10 +286,8 @@ def vista_federal():
         st.markdown("Delitos federales de mayor volumen.")
         top = dff.groupby("TIPO")["Total"].sum().sort_values(ascending=False).head(12).reset_index()
         top["TIPO_corto"] = top["TIPO"].str.slice(0, 38)
-        fig = px.bar(top, x="Total", y="TIPO_corto", orientation="h",
-                     color_discrete_sequence=[C["blue"]])
-        fig.update_layout(**LAYOUT, showlegend=False, height=420,
-                          yaxis=dict(categoryorder="total ascending", title="", gridcolor="#E2E0D8"))
+        fig.update_layout(**LAYOUT, showlegend=False, height=420)
+        fig.update_yaxes(categoryorder="total ascending", title="")
         st.plotly_chart(fig, use_container_width=True)
         fuente(f"Agregación por TIPO. {SRC}")
 
@@ -318,10 +312,8 @@ def vista_federal():
         st.markdown("Entidades con mayor delito federal (excluye Extranjero).")
         te = dff[dff["ENTIDAD"] != "EXTRANJERO"].groupby("ENTIDAD")["Total"].sum().sort_values(ascending=False).head(12).reset_index()
         te["ENTIDAD"] = te["ENTIDAD"].apply(cap)
-        fig = px.bar(te, x="Total", y="ENTIDAD", orientation="h",
-                     color_discrete_sequence=[C["purple"]])
-        fig.update_layout(**LAYOUT, showlegend=False, height=420,
-                          yaxis=dict(categoryorder="total ascending", title="", gridcolor="#E2E0D8"))
+        fig.update_layout(**LAYOUT, showlegend=False, height=420)
+        fig.update_yaxes(categoryorder="total ascending", title="")
         st.plotly_chart(fig, use_container_width=True)
         fuente(f"Agregación por ENTIDAD (excluye Extranjero). {SRC}")
 
